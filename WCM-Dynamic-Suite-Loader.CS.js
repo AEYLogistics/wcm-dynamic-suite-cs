@@ -1,11 +1,11 @@
 // ==UserScript==
-// @name WCM Dynamic Suite v5.51 • Customer Support Edition (Smart Loader)
-// @namespace http://tampermonkey.net/
-// @version 5.51
-// @description Smart Loader: deposit handler runs DIRECTLY on Payments (no full script injected) • Full calculator ONLY fetched on Charges • No more addEventListener error
-// @author @Bakurki
-// @match https://zebra.hellomoving.com/wc.dll?*
-// @grant GM_xmlhttpRequest
+// @name         WCM Dynamic Suite v7.00 • Customer Support Edition (Smart Loader)
+// @namespace    http://tampermonkey.net/
+// @version      7.00
+// @description  Smart Loader: deposit handler runs DIRECTLY on Payments (no full script injected) • Full calculator ONLY fetched on Charges • No more addEventListener error
+// @author       @Bakurki
+// @match        https://zebra.hellomoving.com/wc.dll?*
+// @grant        GM_xmlhttpRequest
 // ==/UserScript==
 (function() {
     'use strict';
@@ -14,7 +14,7 @@
     const FULL_CALCULATOR_URL = 'https://github.com/AEYLogistics/wcm-dynamic-suite-cs/raw/refs/heads/main/WCM-Dynamic-Suite-User.CS.js';
     // ====================== PAYMENTS PAGE – DIRECT HANDLER (no full script ever loaded) ======================
     if (window.location.href.includes(PAYMENTS_PATH)) {
-        console.log('✅ WCM v5.51 Smart Loader: PAYMENTS page – deposit handler active (no full code loaded)');
+        console.log('✅ WCM v7.00 Smart Loader: PAYMENTS page – deposit handler active (no full code loaded)');
         window.addEventListener('load', () => {
             const amt = localStorage.getItem('autoDepositAmount');
             const notes = localStorage.getItem('autoDepositNotes');
@@ -49,7 +49,7 @@
     }
     // ====================== CHARGES PAGE ONLY – FETCH FULL CALCULATOR ======================
     if (window.location.href.includes(CHARGES_PATH)) {
-        console.log('✅ WCM v5.51 Smart Loader: CHARGES page – fetching full calculator');
+        console.log('✅ WCM v7.00 Smart Loader: CHARGES page – fetching full calculator');
         GM_xmlhttpRequest({
             method: "GET",
             url: FULL_CALCULATOR_URL,
@@ -61,5 +61,5 @@
         });
         return;
     }
-    console.log('WCM v5.51 Smart Loader: Neither Charges nor Payments – exiting');
+    console.log('WCM v7.00 Smart Loader: Neither Charges nor Payments – exiting');
 })();
