@@ -1,23 +1,23 @@
 // ==UserScript==
-// @name         WCM Dynamic Suite v7.00 • Customer Support Edition (Full)
-// @namespace    http://tampermonkey.net/
-// @version      7.00
-// @description  v7.00 • Updated verification popup with themed header, toggles, and additional notes (rest identical to v6.00)
-// @author       @Bakurki
-// @match        https://zebra.hellomoving.com/wc.dll?*
-// @grant        GM_xmlhttpRequest
+// @name Dynamic Suite v7.01 • Customer Support Edition (Full)
+// @namespace http://tampermonkey.net/
+// @version 7.01
+// @description v7.01 • Updated verification popup section order + themed header, toggles, and additional notes (rest identical to v7.00)
+// @author @Bakurki
+// @match https://zebra.hellomoving.com/wc.dll?*
+// @grant GM_xmlhttpRequest
 // ==/UserScript==
-// CACHE-BUST 2026-03-17 13:04 - Loader pulls this fresh
+// CACHE-BUST 2026-03-17 16:45 - Loader pulls this fresh
 // STATIC TIMESTAMPS - UPDATED WITH EVERY VERSION
-const LOADER_LAST_UPDATED = 'March 17, 2026 01:04 PM EDT';
-const FULL_LAST_UPDATED = 'March 17, 2026 01:04 PM EDT';
+const LOADER_LAST_UPDATED = 'March 17, 2026 04:45 PM EDT';
+const FULL_LAST_UPDATED = 'March 17, 2026 04:45 PM EDT';
 (function() {
     'use strict';
     const CHARGES_PATH = 'mpcharge~chargeswc~';
     const PAYMENTS_PATH = 'mpopr~paymentswc~';
     // ====================== PAYMENTS PAGE – DIRECT HANDLER ======================
     if (window.location.href.includes(PAYMENTS_PATH)) {
-        console.log('✅ Dynamic Suite v7.00: PAYMENTS page - deposit handler active');
+        console.log('✅ Dynamic Suite v7.01: PAYMENTS page - deposit handler active');
         window.addEventListener('load', () => {
             const amt = localStorage.getItem('autoDepositAmount');
             const notes = localStorage.getItem('autoDepositNotes');
@@ -51,7 +51,7 @@ const FULL_LAST_UPDATED = 'March 17, 2026 01:04 PM EDT';
         return;
     }
     if (!window.location.href.includes(CHARGES_PATH)) return;
-    console.log('✅ Dynamic Suite v7.00: CHARGES page - full scraper active');
+    console.log('✅ Dynamic Suite v7.01: CHARGES page - full scraper active');
     // ====================== CSS ======================
     const style = document.createElement('style');
     style.textContent = `
@@ -394,7 +394,7 @@ const FULL_LAST_UPDATED = 'March 17, 2026 01:04 PM EDT';
             <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Full Pack</span><span class="toggle-switch"><input type="checkbox" id="mini-pack" ${fullPack?'checked':''}><span class="slider"></span></span></label>
             <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">State Discount</span><span class="toggle-switch"><input type="checkbox" id="mini-state" ${stateDiscount?'checked':''}><span class="slider"></span></span></label>
             <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Binding</span><span class="toggle-switch"><input type="checkbox" id="mini-binding" ${bindingFee?'checked':''}><span class="slider"></span></span></label>
-            <div style="text-align:center;margin-top:12px;font-size:10px;color:#adb5bd;">Customer Support Edition v7.00</div>
+            <div style="text-align:center;margin-top:12px;font-size:10px;color:#adb5bd;">Customer Support Edition v7.01</div>
         `;
         document.body.appendChild(drawer);
         const tooltip = document.createElement('div');
@@ -436,11 +436,11 @@ const FULL_LAST_UPDATED = 'March 17, 2026 01:04 PM EDT';
         const toggleBtn = document.getElementById('wcm-toggle');
         toggleBtn.textContent = isFullView ? '−' : '+';
         if (isSummerMode(date)) {
-            headerTitle.textContent = 'Dynamic Suite v7.00 ☀️';
+            headerTitle.textContent = 'Dynamic Suite v7.01 ☀️';
             header.style.background = 'linear-gradient(90deg, #ff7e5f, #feb47b)';
             header.style.color = '#fff';
         } else {
-            headerTitle.textContent = 'Dynamic Suite v7.00 ❄️';
+            headerTitle.textContent = 'Dynamic Suite v7.01 ❄️';
             header.style.background = 'linear-gradient(90deg, #0288d1, #81d4fa)';
             header.style.color = '#fff';
         }
@@ -634,6 +634,18 @@ const FULL_LAST_UPDATED = 'March 17, 2026 01:04 PM EDT';
                 </div>
                 <div class="wcm-section">
                     <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
+                        <span class="wcm-section-label" style="margin-bottom:0;">Auto Transport:</span>
+                        <span class="toggle-switch"><input type="checkbox" id="auto"><span class="slider"></span></span>
+                    </label>
+                </div>
+                <div class="wcm-section">
+                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
+                        <span class="wcm-section-label" style="margin-bottom:0;">Explained QA:</span>
+                        <span class="toggle-switch"><input type="checkbox" id="qa"><span class="slider"></span></span>
+                    </label>
+                </div>
+                <div class="wcm-section">
+                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
                         <span class="wcm-section-label" style="margin-bottom:0;">Extra Stops:</span>
                         <span class="toggle-switch"><input type="checkbox" id="extra-stops"><span class="slider"></span></span>
                     </label>
@@ -681,18 +693,6 @@ const FULL_LAST_UPDATED = 'March 17, 2026 01:04 PM EDT';
                     <div id="extra-contact-options" class="sub-options">
                         <input type="text" id="extra-contact" style="width:100%;padding:6px;border:1px solid #dee2e6;border-radius:4px;font-size:11px;" placeholder="Name & phone (optional)">
                     </div>
-                </div>
-                <div class="wcm-section">
-                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
-                        <span class="wcm-section-label" style="margin-bottom:0;">Auto Transport:</span>
-                        <span class="toggle-switch"><input type="checkbox" id="auto"><span class="slider"></span></span>
-                    </label>
-                </div>
-                <div class="wcm-section">
-                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
-                        <span class="wcm-section-label" style="margin-bottom:0;">Explained QA:</span>
-                        <span class="toggle-switch"><input type="checkbox" id="qa"><span class="slider"></span></span>
-                    </label>
                 </div>
                 <div class="wcm-section">
                     <span class="wcm-section-label">Additional Notes:</span>
@@ -777,6 +777,10 @@ const FULL_LAST_UPDATED = 'March 17, 2026 01:04 PM EDT';
             if (document.getElementById('pay-zelle').checked) payments.push('Zelle');
             if (document.getElementById('pay-postal').checked) payments.push('Postal Money Order');
             remarksText += 'Payments - ' + (payments.length ? payments.join(', ') : 'None') + '\n';
+            // Auto Transport
+            remarksText += 'Auto Transport: ' + (document.getElementById('auto').checked ? 'Yes' : 'No') + '\n';
+            // Explained QA
+            remarksText += 'Explained QA: ' + (document.getElementById('qa').checked ? 'Yes' : 'No') + '\n';
             // Extra Stops
             const extraStopsOn = document.getElementById('extra-stops').checked;
             let extraStopsList = [];
@@ -806,10 +810,6 @@ const FULL_LAST_UPDATED = 'March 17, 2026 01:04 PM EDT';
             const extraContactOn = document.getElementById('extra-contact-toggle').checked;
             const extraText = document.getElementById('extra-contact').value.trim();
             remarksText += 'Extra Point of Contact: ' + (extraContactOn ? (extraText || 'Yes') : 'No') + '\n';
-            // Auto Transport
-            remarksText += 'Auto Transport: ' + (document.getElementById('auto').checked ? 'Yes' : 'No') + '\n';
-            // Explained QA
-            remarksText += 'Explained QA: ' + (document.getElementById('qa').checked ? 'Yes' : 'No') + '\n';
             const additional = document.getElementById('additional-notes').value.trim();
             if (additional) remarksText += 'Additional Notes - ' + additional;
             const remarksField = document.querySelector('textarea[name*="REMARKS"]') || document.querySelector('textarea');
