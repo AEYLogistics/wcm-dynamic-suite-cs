@@ -1,23 +1,23 @@
 // ==UserScript==
-// @name Dynamic Suite v6.01 • Customer Support Edition (Full)
-// @namespace http://tampermonkey.net/
-// @version 6.01
-// @description v6.01 • Updated verification popup with themed header, toggles, and additional notes (rest identical to v6.00)
-// @author @Bakurki
-// @match https://zebra.hellomoving.com/wc.dll?*
-// @grant GM_xmlhttpRequest
+// @name         WCM Dynamic Suite v7.00 • Customer Support Edition (Full)
+// @namespace    http://tampermonkey.net/
+// @version      7.00
+// @description  v7.00 • Updated verification popup with themed header, toggles, and additional notes (rest identical to v6.00)
+// @author       @Bakurki
+// @match        https://zebra.hellomoving.com/wc.dll?*
+// @grant        GM_xmlhttpRequest
 // ==/UserScript==
-// CACHE-BUST 2026-03-17 11:35 - Loader pulls this fresh
+// CACHE-BUST 2026-03-17 13:04 - Loader pulls this fresh
 // STATIC TIMESTAMPS - UPDATED WITH EVERY VERSION
-const LOADER_LAST_UPDATED = 'March 17, 2026 11:35 AM EDT';
-const FULL_LAST_UPDATED = 'March 17, 2026 11:35 AM EDT';
+const LOADER_LAST_UPDATED = 'March 17, 2026 01:04 PM EDT';
+const FULL_LAST_UPDATED = 'March 17, 2026 01:04 PM EDT';
 (function() {
     'use strict';
     const CHARGES_PATH = 'mpcharge~chargeswc~';
     const PAYMENTS_PATH = 'mpopr~paymentswc~';
     // ====================== PAYMENTS PAGE – DIRECT HANDLER ======================
     if (window.location.href.includes(PAYMENTS_PATH)) {
-        console.log('✅ Dynamic Suite v6.01: PAYMENTS page - deposit handler active');
+        console.log('✅ Dynamic Suite v7.00: PAYMENTS page - deposit handler active');
         window.addEventListener('load', () => {
             const amt = localStorage.getItem('autoDepositAmount');
             const notes = localStorage.getItem('autoDepositNotes');
@@ -51,7 +51,7 @@ const FULL_LAST_UPDATED = 'March 17, 2026 11:35 AM EDT';
         return;
     }
     if (!window.location.href.includes(CHARGES_PATH)) return;
-    console.log('✅ Dynamic Suite v6.01: CHARGES page - full scraper active');
+    console.log('✅ Dynamic Suite v7.00: CHARGES page - full scraper active');
     // ====================== CSS ======================
     const style = document.createElement('style');
     style.textContent = `
@@ -394,7 +394,7 @@ const FULL_LAST_UPDATED = 'March 17, 2026 11:35 AM EDT';
             <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Full Pack</span><span class="toggle-switch"><input type="checkbox" id="mini-pack" ${fullPack?'checked':''}><span class="slider"></span></span></label>
             <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">State Discount</span><span class="toggle-switch"><input type="checkbox" id="mini-state" ${stateDiscount?'checked':''}><span class="slider"></span></span></label>
             <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Binding</span><span class="toggle-switch"><input type="checkbox" id="mini-binding" ${bindingFee?'checked':''}><span class="slider"></span></span></label>
-            <div style="text-align:center;margin-top:12px;font-size:10px;color:#adb5bd;">Customer Support Edition v6.01</div>
+            <div style="text-align:center;margin-top:12px;font-size:10px;color:#adb5bd;">Customer Support Edition v7.00</div>
         `;
         document.body.appendChild(drawer);
         const tooltip = document.createElement('div');
@@ -436,11 +436,11 @@ const FULL_LAST_UPDATED = 'March 17, 2026 11:35 AM EDT';
         const toggleBtn = document.getElementById('wcm-toggle');
         toggleBtn.textContent = isFullView ? '−' : '+';
         if (isSummerMode(date)) {
-            headerTitle.textContent = 'Dynamic Suite v6.01 ☀️';
+            headerTitle.textContent = 'Dynamic Suite v7.00 ☀️';
             header.style.background = 'linear-gradient(90deg, #ff7e5f, #feb47b)';
             header.style.color = '#fff';
         } else {
-            headerTitle.textContent = 'Dynamic Suite v6.01 ❄️';
+            headerTitle.textContent = 'Dynamic Suite v7.00 ❄️';
             header.style.background = 'linear-gradient(90deg, #0288d1, #81d4fa)';
             header.style.color = '#fff';
         }
