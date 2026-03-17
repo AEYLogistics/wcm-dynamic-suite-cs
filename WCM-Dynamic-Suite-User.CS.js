@@ -1,23 +1,23 @@
 // ==UserScript==
-// @name Dynamic Suite v5.89 • Customer Support Edition (Full)
+// @name Dynamic Suite v6.01 • Customer Support Edition (Full)
 // @namespace http://tampermonkey.net/
-// @version 5.89
-// @description v5.89 • Updated verification popup with themed header, toggles, and additional notes (rest identical to v5.88)
+// @version 6.01
+// @description v6.01 • Updated verification popup with themed header, toggles, and additional notes (rest identical to v6.00)
 // @author @Bakurki
 // @match https://zebra.hellomoving.com/wc.dll?*
 // @grant GM_xmlhttpRequest
 // ==/UserScript==
-// CACHE-BUST 2026-03-16 17:39 - Loader pulls this fresh
+// CACHE-BUST 2026-03-17 11:35 - Loader pulls this fresh
 // STATIC TIMESTAMPS - UPDATED WITH EVERY VERSION
-const LOADER_LAST_UPDATED = 'March 16, 2026 5:39 PM EDT';
-const FULL_LAST_UPDATED = 'March 16, 2026 5:39 PM EDT';
+const LOADER_LAST_UPDATED = 'March 17, 2026 11:35 AM EDT';
+const FULL_LAST_UPDATED = 'March 17, 2026 11:35 AM EDT';
 (function() {
     'use strict';
     const CHARGES_PATH = 'mpcharge~chargeswc~';
     const PAYMENTS_PATH = 'mpopr~paymentswc~';
     // ====================== PAYMENTS PAGE – DIRECT HANDLER ======================
     if (window.location.href.includes(PAYMENTS_PATH)) {
-        console.log('✅ Dynamic Suite v5.89: PAYMENTS page - deposit handler active');
+        console.log('✅ Dynamic Suite v6.01: PAYMENTS page - deposit handler active');
         window.addEventListener('load', () => {
             const amt = localStorage.getItem('autoDepositAmount');
             const notes = localStorage.getItem('autoDepositNotes');
@@ -51,7 +51,7 @@ const FULL_LAST_UPDATED = 'March 16, 2026 5:39 PM EDT';
         return;
     }
     if (!window.location.href.includes(CHARGES_PATH)) return;
-    console.log('✅ Dynamic Suite v5.89: CHARGES page - full scraper active');
+    console.log('✅ Dynamic Suite v6.01: CHARGES page - full scraper active');
     // ====================== CSS ======================
     const style = document.createElement('style');
     style.textContent = `
@@ -87,12 +87,15 @@ const FULL_LAST_UPDATED = 'March 16, 2026 5:39 PM EDT';
         .wcm-verify:hover { background:#138496; }
         .wcm-toast { position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#28a745; color:#fff; padding:14px 24px; border-radius:8px; z-index:999999; box-shadow:0 6px 20px rgba(0,0,0,0.3); font-size:13.5px; cursor:pointer; transition:all .2s; }
         .wcm-toast.error { background:#dc3545; }
-        #wcm-verify-popup { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; border-radius:12px; box-shadow:0 12px 30px rgba(0,0,0,0.15); z-index:100001; width:320px; font-family:'Inter',Arial,sans-serif; font-size:12px; overflow:hidden; }
+        #wcm-verify-popup { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; border-radius:12px; box-shadow:0 12px 30px rgba(0,0,0,0.15); z-index:100001; width:320px; font-family:'Inter',Arial,sans-serif; font-size:12px; overflow:hidden; line-height:1.3; }
         #wcm-verify-header { border-bottom:1px solid #e9ecef; padding:7px 10px; display:flex; align-items:center; justify-content:space-between; font-weight:700; font-size:12px; transition:all .3s; }
         .wcm-verify-content { padding:9px; }
-        .wcm-section { margin-bottom:12px; }
-        .wcm-section-label { font-weight:600; color:#333; font-size:11.5px; margin-bottom:6px; display:block; }
+        .wcm-section { margin-bottom:2px; line-height:1.3; }
+        .wcm-section-label { font-weight:600; color:#333; font-size:11.5px; margin:0; padding:2px 0; display:block; line-height:1.3; }
+        .wcm-section label { padding:2px 0; line-height:1.3; }
         #additional-notes { width:100%; height:60px; border:1px solid #dee2e6; border-radius:4px; padding:6px; font-size:11px; color:#555; resize:none; }
+        .sub-options { max-height:0; overflow:hidden; transition: max-height 0.3s ease; margin-left:20px; margin-top:0; margin-bottom:0; padding:0; }
+        .sub-options.show { max-height:200px; }
     `;
     document.head.appendChild(style);
     // ====================== DATE HELPERS ======================
@@ -391,6 +394,7 @@ const FULL_LAST_UPDATED = 'March 16, 2026 5:39 PM EDT';
             <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Full Pack</span><span class="toggle-switch"><input type="checkbox" id="mini-pack" ${fullPack?'checked':''}><span class="slider"></span></span></label>
             <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">State Discount</span><span class="toggle-switch"><input type="checkbox" id="mini-state" ${stateDiscount?'checked':''}><span class="slider"></span></span></label>
             <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Binding</span><span class="toggle-switch"><input type="checkbox" id="mini-binding" ${bindingFee?'checked':''}><span class="slider"></span></span></label>
+            <div style="text-align:center;margin-top:12px;font-size:10px;color:#adb5bd;">Customer Support Edition v6.01</div>
         `;
         document.body.appendChild(drawer);
         const tooltip = document.createElement('div');
@@ -432,11 +436,11 @@ const FULL_LAST_UPDATED = 'March 16, 2026 5:39 PM EDT';
         const toggleBtn = document.getElementById('wcm-toggle');
         toggleBtn.textContent = isFullView ? '−' : '+';
         if (isSummerMode(date)) {
-            headerTitle.textContent = 'Dynamic Suite v5.89 ☀️';
+            headerTitle.textContent = 'Dynamic Suite v6.01 ☀️';
             header.style.background = 'linear-gradient(90deg, #ff7e5f, #feb47b)';
             header.style.color = '#fff';
         } else {
-            headerTitle.textContent = 'Dynamic Suite v5.89 ❄️';
+            headerTitle.textContent = 'Dynamic Suite v6.01 ❄️';
             header.style.background = 'linear-gradient(90deg, #0288d1, #81d4fa)';
             header.style.color = '#fff';
         }
@@ -459,7 +463,7 @@ const FULL_LAST_UPDATED = 'March 16, 2026 5:39 PM EDT';
             <div class="wcm-row"><span class="wcm-label">CF Price:</span><span class="wcm-cf">${cf.pricePerCf}${peakBadge}</span></div>
             <div class="wcm-hover-bar" id="hover-bar">v</div>
             <div class="wcm-hover-content" id="hover-content">
-                <button class="wcm-btn wcm-verify" id="verify-btn">✅ Verification Complete</button>
+                <button class="wcm-btn wcm-verify" id="verify-btn">✅ Verification Checklist</button>
             </div>
         ` : `
             ${alertHTML}
@@ -472,7 +476,7 @@ const FULL_LAST_UPDATED = 'March 16, 2026 5:39 PM EDT';
             <div class="wcm-row"><span class="wcm-label">CF Price:</span><span class="wcm-cf">${cf.pricePerCf}${peakBadge}</span></div>
             <div class="wcm-hover-bar" id="hover-bar">v</div>
             <div class="wcm-hover-content" id="hover-content">
-                <button class="wcm-btn wcm-verify" id="verify-btn">✅ Verification Complete</button>
+                <button class="wcm-btn wcm-verify" id="verify-btn">✅ Verification Checklist</button>
             </div>
         `;
         content.innerHTML = html;
@@ -629,37 +633,72 @@ const FULL_LAST_UPDATED = 'March 16, 2026 5:39 PM EDT';
                     <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Postal Money Order</span><span class="toggle-switch"><input type="checkbox" id="pay-postal"><span class="slider"></span></span></label>
                 </div>
                 <div class="wcm-section">
-                    <span class="wcm-section-label">Extra Stops:</span>
-                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Pick-Up</span><span class="toggle-switch"><input type="checkbox" id="pickup"><span class="slider"></span></span></label>
-                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Delivery</span><span class="toggle-switch"><input type="checkbox" id="delivery"><span class="slider"></span></span></label>
+                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
+                        <span class="wcm-section-label" style="margin-bottom:0;">Extra Stops:</span>
+                        <span class="toggle-switch"><input type="checkbox" id="extra-stops"><span class="slider"></span></span>
+                    </label>
+                    <div id="extra-stops-options" class="sub-options">
+                        <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Pick-Up</span><span class="toggle-switch"><input type="checkbox" id="pickup"><span class="slider"></span></span></label>
+                        <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Delivery</span><span class="toggle-switch"><input type="checkbox" id="delivery"><span class="slider"></span></span></label>
+                    </div>
                 </div>
                 <div class="wcm-section">
-                    <span class="wcm-section-label">Storage:</span>
-                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Storage</span><span class="toggle-switch"><input type="checkbox" id="storage"><span class="slider"></span></span></label>
+                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
+                        <span class="wcm-section-label" style="margin-bottom:0;">Storage:</span>
+                        <span class="toggle-switch"><input type="checkbox" id="storage"><span class="slider"></span></span>
+                    </label>
+                    <div id="storage-options" class="sub-options">
+                        <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">30 Days FREE Storage w/ Delivery</span><span class="toggle-switch"><input type="checkbox" id="storage-30"><span class="slider"></span></span></label>
+                        <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Additional Storage After 30 Days FREE</span><span class="toggle-switch"><input type="checkbox" id="storage-additional"><span class="slider"></span></span></label>
+                    </div>
                 </div>
                 <div class="wcm-section">
-                    <span class="wcm-section-label">COI (Certificate of Insurance):</span>
-                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">COI</span><span class="toggle-switch"><input type="checkbox" id="coi"><span class="slider"></span></span></label>
+                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
+                        <span class="wcm-section-label" style="margin-bottom:0;">COI (Certificate of Insurance):</span>
+                        <span class="toggle-switch"><input type="checkbox" id="coi"><span class="slider"></span></span>
+                    </label>
+                    <div id="coi-options" class="sub-options">
+                        <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Pick-Up</span><span class="toggle-switch"><input type="checkbox" id="coi-pickup"><span class="slider"></span></span></label>
+                        <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Delivery</span><span class="toggle-switch"><input type="checkbox" id="coi-delivery"><span class="slider"></span></span></label>
+                    </div>
                 </div>
                 <div class="wcm-section">
-                    <span class="wcm-section-label">Packing:</span>
-                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">PBO</span><span class="toggle-switch"><input type="checkbox" id="pack-pbo"><span class="slider"></span></span></label>
-                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Partial Pack</span><span class="toggle-switch"><input type="checkbox" id="pack-partial"><span class="slider"></span></span></label>
-                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Full Pack</span><span class="toggle-switch"><input type="checkbox" id="pack-full"><span class="slider"></span></span></label>
+                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
+                        <span class="wcm-section-label" style="margin-bottom:0;">Packing:</span>
+                        <span class="toggle-switch"><input type="checkbox" id="packing"><span class="slider"></span></span>
+                    </label>
+                    <div id="packing-options" class="sub-options">
+                        <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">PBO</span><span class="toggle-switch"><input type="checkbox" id="pack-pbo"><span class="slider"></span></span></label>
+                        <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Partial Pack</span><span class="toggle-switch"><input type="checkbox" id="pack-partial"><span class="slider"></span></span></label>
+                        <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Full Pack</span><span class="toggle-switch"><input type="checkbox" id="pack-full"><span class="slider"></span></span></label>
+                    </div>
                 </div>
                 <div class="wcm-section">
-                    <span class="wcm-section-label">Auto:</span>
-                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Auto</span><span class="toggle-switch"><input type="checkbox" id="auto"><span class="slider"></span></span></label>
+                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
+                        <span class="wcm-section-label" style="margin-bottom:0;">Extra Point of Contact:</span>
+                        <span class="toggle-switch"><input type="checkbox" id="extra-contact-toggle"><span class="slider"></span></span>
+                    </label>
+                    <div id="extra-contact-options" class="sub-options">
+                        <input type="text" id="extra-contact" style="width:100%;padding:6px;border:1px solid #dee2e6;border-radius:4px;font-size:11px;" placeholder="Name & phone (optional)">
+                    </div>
                 </div>
                 <div class="wcm-section">
-                    <span class="wcm-section-label">Explained QA:</span>
-                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;"><span class="wcm-label">Explained QA</span><span class="toggle-switch"><input type="checkbox" id="qa"><span class="slider"></span></span></label>
+                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
+                        <span class="wcm-section-label" style="margin-bottom:0;">Auto Transport:</span>
+                        <span class="toggle-switch"><input type="checkbox" id="auto"><span class="slider"></span></span>
+                    </label>
+                </div>
+                <div class="wcm-section">
+                    <label style="display:flex;align-items:center;justify-content:space-between;margin:6px 0;font-size:11px;">
+                        <span class="wcm-section-label" style="margin-bottom:0;">Explained QA:</span>
+                        <span class="toggle-switch"><input type="checkbox" id="qa"><span class="slider"></span></span>
+                    </label>
                 </div>
                 <div class="wcm-section">
                     <span class="wcm-section-label">Additional Notes:</span>
-                    <textarea id="additional-notes" placeholder="Enter any other information..."></textarea>
+                    <textarea id="additional-notes" placeholder="Weight tickets needed or any other important information or requests..."></textarea>
                 </div>
-                <button id="verify-submit" class="wcm-btn wcm-verify">Submit</button>
+                <button id="verify-submit" class="wcm-btn wcm-verify">✅ Verification Completed</button>
             </div>
         `;
         document.body.appendChild(verifyPopup);
@@ -675,57 +714,106 @@ const FULL_LAST_UPDATED = 'March 16, 2026 5:39 PM EDT';
             verifyHeader.style.background = 'linear-gradient(90deg, #0288d1, #81d4fa)';
             verifyHeader.style.color = '#fff';
         }
+        function toggleSub(id, subId) {
+            const toggle = document.getElementById(id);
+            const sub = document.getElementById(subId);
+            if (toggle && sub) {
+                toggle.onchange = () => {
+                    if (toggle.checked) {
+                        sub.classList.add('show');
+                    } else {
+                        sub.classList.remove('show');
+                    }
+                };
+            }
+        }
+        toggleSub('extra-stops', 'extra-stops-options');
+        toggleSub('storage', 'storage-options');
+        toggleSub('coi', 'coi-options');
+        toggleSub('packing', 'packing-options');
+        toggleSub('extra-contact-toggle', 'extra-contact-options');
         document.querySelector('#wcm-verify-popup .wcm-close').onclick = () => verifyPopup.remove();
         document.getElementById('verify-submit').onclick = () => {
-            // Validate
-            const payBank = document.getElementById('pay-bank');
-            const payZelle = document.getElementById('pay-zelle');
-            const payPostal = document.getElementById('pay-postal');
-            if (!payBank.checked && !payZelle.checked && !payPostal.checked) {
-                showToast('Select at least one payment method', 'error');
+            // ==================== VALIDATION ====================
+            const hasPayment = document.getElementById('pay-bank').checked || document.getElementById('pay-zelle').checked || document.getElementById('pay-postal').checked;
+            if (!hasPayment) {
+                showToast('⚠️ At least one Payment method required!', 'error');
                 return;
             }
-            const packPbo = document.getElementById('pack-pbo');
-            const packPartial = document.getElementById('pack-partial');
-            const packFull = document.getElementById('pack-full');
-            if (!packPbo.checked && !packPartial.checked && !packFull.checked) {
-                showToast('Select at least one packing option', 'error');
+            if (!document.getElementById('qa').checked) {
+                showToast('⚠️ QA must be explained!', 'error');
                 return;
             }
-            const requiredToggles = ['pickup', 'delivery', 'storage', 'coi', 'auto', 'qa'];
-            for (let id of requiredToggles) {
-                const chk = document.getElementById(id);
-                if (!chk.checked) {
-                    // For binary, but since single toggle, assume on=yes, off=no, no need to force selection, as off means no
+            const validateSection = (mainId, subIds, sectionName) => {
+                const main = document.getElementById(mainId);
+                if (main && main.checked) {
+                    let hasSub = subIds.some(id => {
+                        const el = document.getElementById(id);
+                        return el && el.checked;
+                    });
+                    if (!hasSub) {
+                        showToast(`⚠️ At least one ${sectionName} option required!`, 'error');
+                        return false;
+                    }
+                }
+                return true;
+            };
+            if (!validateSection('extra-stops', ['pickup','delivery'], 'Extra Stops')) return;
+            if (!validateSection('storage', ['storage-30','storage-additional'], 'Storage')) return;
+            if (!validateSection('coi', ['coi-pickup','coi-delivery'], 'COI')) return;
+            if (!validateSection('packing', ['pack-pbo','pack-partial','pack-full'], 'Packing')) return;
+            const extraToggle = document.getElementById('extra-contact-toggle');
+            if (extraToggle && extraToggle.checked) {
+                const text = document.getElementById('extra-contact').value.trim();
+                if (!text) {
+                    showToast('⚠️ Extra Point of Contact text required!', 'error');
+                    return;
                 }
             }
-            // Construct remarks
-            let remarksText = '<b style="font-size:larger;">Verification Completed</b>\n';
+            // ==================== BUILD REMARKS ====================
+            let remarksText = '✅ VERIFICATION COMPLETED ✅\n\n';
             let payments = [];
-            if (payBank.checked) payments.push('Bank Wire');
-            if (payZelle.checked) payments.push('Zelle');
-            if (payPostal.checked) payments.push('Postal Money Order');
-            remarksText += 'Payments - ' + payments.join(', ') + '\n';
-            remarksText += 'Extra Stops - Pick-Up ' + (document.getElementById('pickup').checked ? 'Yes' : 'No') + '\n - Delivery ' + (document.getElementById('delivery').checked ? 'Yes' : 'No') + '\n';
-            remarksText += 'Storage - ' + (document.getElementById('storage').checked ? 'Yes' : 'No') + '\n';
-            remarksText += 'Coi - ' + (document.getElementById('coi').checked ? 'Yes' : 'No') + '\n';
+            if (document.getElementById('pay-bank').checked) payments.push('Bank Wire');
+            if (document.getElementById('pay-zelle').checked) payments.push('Zelle');
+            if (document.getElementById('pay-postal').checked) payments.push('Postal Money Order');
+            remarksText += 'Payments - ' + (payments.length ? payments.join(', ') : 'None') + '\n';
+            // Extra Stops
+            const extraStopsOn = document.getElementById('extra-stops').checked;
+            let extraStopsList = [];
+            if (document.getElementById('pickup').checked) extraStopsList.push('Pick-Up');
+            if (document.getElementById('delivery').checked) extraStopsList.push('Delivery');
+            remarksText += 'Extra Stops: ' + (extraStopsOn ? 'Yes - ' + (extraStopsList.length ? extraStopsList.join(' and ') : 'None') : 'No') + '\n';
+            // Storage
+            const storageOn = document.getElementById('storage').checked;
+            let storageList = [];
+            if (document.getElementById('storage-30').checked) storageList.push('30 Days FREE Storage w/ Delivery');
+            if (document.getElementById('storage-additional').checked) storageList.push('Additional Storage After 30 Days FREE');
+            remarksText += 'Storage: ' + (storageOn ? 'Yes - ' + (storageList.length ? storageList.join(', ') : 'None') : 'No') + '\n';
+            // COI
+            const coiOn = document.getElementById('coi').checked;
+            let coiList = [];
+            if (document.getElementById('coi-pickup').checked) coiList.push('Pick-Up');
+            if (document.getElementById('coi-delivery').checked) coiList.push('Delivery');
+            remarksText += 'COI: ' + (coiOn ? 'Yes - ' + (coiList.length ? coiList.join(' and ') : 'None') : 'No') + '\n';
+            // Packing – ALWAYS shows PBO if nothing selected (even if toggle is OFF)
             let packing = [];
-            if (packPbo.checked) packing.push('PBO');
-            if (packPartial.checked) packing.push('Partial Pack');
-            if (packFull.checked) packing.push('Full Pack');
-            remarksText += 'Packing - ' + packing.join(', ') + '\n';
-            remarksText += 'Auto - ' + (document.getElementById('auto').checked ? 'Yes' : 'No') + '\n';
-            if (document.getElementById('qa').checked) {
-                remarksText += 'Explained QA';
-            } else {
-                remarksText += 'QA Not Explained';
-            }
+            if (document.getElementById('pack-pbo').checked) packing.push('PBO');
+            if (document.getElementById('pack-partial').checked) packing.push('Partial Pack');
+            if (document.getElementById('pack-full').checked) packing.push('Full Pack');
+            let packingStr = packing.length ? packing.join(', ') : 'PBO';
+            remarksText += 'Packing - ' + packingStr + '\n';
+            // Extra Point of Contact
+            const extraContactOn = document.getElementById('extra-contact-toggle').checked;
+            const extraText = document.getElementById('extra-contact').value.trim();
+            remarksText += 'Extra Point of Contact: ' + (extraContactOn ? (extraText || 'Yes') : 'No') + '\n';
+            // Auto Transport
+            remarksText += 'Auto Transport: ' + (document.getElementById('auto').checked ? 'Yes' : 'No') + '\n';
+            // Explained QA
+            remarksText += 'Explained QA: ' + (document.getElementById('qa').checked ? 'Yes' : 'No') + '\n';
             const additional = document.getElementById('additional-notes').value.trim();
-            if (additional) {
-                remarksText += '\nAdditional Notes - ' + additional;
-            }
+            if (additional) remarksText += 'Additional Notes - ' + additional;
             const remarksField = document.querySelector('textarea[name*="REMARKS"]') || document.querySelector('textarea');
-            if (remarksField) remarksField.value += (remarksField.value ? '\n' : '') + remarksText;
+            if (remarksField) remarksField.value += (remarksField.value ? '\n\n' : '') + remarksText;
             const submitBtn = document.querySelector('input[name="SUBMIT_3"]');
             if (submitBtn) setTimeout(() => submitBtn.click(), 400);
             showToast('✅ Verification added to remarks!', 'success');
